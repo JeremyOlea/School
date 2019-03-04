@@ -1,0 +1,24 @@
+
+Please enter a positive value for the int variable a: 
+Please enter a positive value for the int variable b: 
+Please enter a positive value for the int variable c: The numbers are: a = 2, b = 2, c = 2. They are the same
+
+ And they are in non-decreasing order
+
+
+Please enter a positive value for the int variable a: 
+Please enter a positive value for the int variable b: 
+Please enter a positive value for the int variable c: The numbers are: a = 3, b = 3, c = 3. They are the same
+
+ And they are in non-decreasing order
+
+
+Please enter a positive value for the int variable a: 
+Please enter a positive value for the int variable b: 
+Please enter a positive value for the int variable c: The numbers are: a = 3, b = 5, c = 6. They are NOT the same
+
+ And they are in non-decreasing order
+
+
+Please enter a positive value for the int variable a: 
+Program terminated....
