@@ -1,0 +1,7 @@
+car
+arc
+bed
+game
+mega
+pots
+stop
