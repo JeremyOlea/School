@@ -1,0 +1,14 @@
+List elements smaller or equal to the pivot
+Quicksort -- NONE OF THE ABOVE
+X's = 3N-2
+Rate of i -- NONE
+n0 = 16
+Selection sort to Insertion sort --- N^2 logN + N^2 + N
+cN^3 --- 8
+1 Second -- NONE
+4n^2 + 3n, 4n^3 + 3n^2
+Insertion sort --- 3 4 5 12 11 2 10 9
+BUBBLE --- 3 4 5 2 10 9 11 12
+Recursion --- isIdentifier(s - last char)
+array + linkedlist --- A runs faster than B
+

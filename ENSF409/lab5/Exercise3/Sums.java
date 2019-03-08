@@ -9,11 +9,10 @@ public class Sums {
 		int s, nextInt;
 		s = 0;
 		do {
-			try {
 				System.out.println("Please input the sequence of integers to sum, terminated by a 0");
+			try{
         		nextInt = Integer.parseInt(in.readLine());
                 //Read next datum in input. An integer is expected
-
 				while (nextInt!=0) {
 	    		s = s + nextInt;
 	    		nextInt = Integer.parseInt(in.readLine());
