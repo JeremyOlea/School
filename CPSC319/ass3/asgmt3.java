@@ -8,18 +8,24 @@ public class asgmt3 {
         int total = findTotals(tree.root);
         int maxHeight = findHeight(tree.root);
         int unique = findUnique(tree.root);
-        //print(tree.root);
         System.out.println("total " + total);
         System.out.println("max height " + maxHeight);
         System.out.println("unique " + unique);
+        ArrayList<Node> list = findQuantities(tree.root);
+        for(Node node : list) {
+            System.out.println(node.word + " " + node.counter);
+        }
     }
 
-    public static void print(Node current) {
+    public static ArrayList<Node> findQuantities(Node current) {
+        ArrayList<Node> word = new ArrayList<Node>();
+        word.add(current);
         if(current.right != null) 
-            print(current.right);
+            word.addAll(findQuantities(current.right));
         if(current.left != null)
-             print(current.left);
-        current.toStrin();
+            word.addAll(findQuantities(current.left));
+        
+        return word;
     }
 
     public static String[] fileRead() {

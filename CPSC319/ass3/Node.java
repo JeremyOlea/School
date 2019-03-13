@@ -9,7 +9,7 @@ public class Node {
         counter = 1;
     }
 
-    public void toStrin() {
-        System.out.println(word);
+    public String toString() {
+        return "The word is " + word;
     }
 }

@@ -40,4 +40,28 @@ public class BST {
         }
     }
 
+    public void inOrderTraverse(Node node) {
+        if(node != null) {
+            inOrderTraverse(node.left);
+            System.out.println(node.toString());
+            inOrderTraverse(node.right);
+        }
+    }
+
+    public void preOrderTraverse(Node node) {
+        if(node != null) {
+            System.out.println(node.toString());
+            preOrderTraverse(node.left);
+            preOrderTraverse(node.right);
+        }
+    }
+
+    public void postOrderTraverse(Node node) {
+        if(node != null) {
+            postOrderTraverse(node.left);
+            postOrderTraverse(node.right);
+            System.out.println(node.toString());
+        }
+    }
+
 }
