@@ -2,100 +2,145 @@ import java.util.*;
 import java.io.*;
 public class asgmt3 {
     public static void main(String[] args) {
-        String[] words = fileRead();
+        Scanner scan = new Scanner(System.in);
+        ArrayList<String> words = fileRead(scan);
         BST tree = new BST();
         tree = populateTree(words);
-        int total = findTotals(tree.root);
-        int maxHeight = findHeight(tree.root);
-        int unique = findUnique(tree.root);
-        System.out.println("total " + total);
-        System.out.println("max height " + maxHeight);
-        System.out.println("unique " + unique);
-        ArrayList<Node> list = findQuantities(tree.root);
-        for(Node node : list) {
-            System.out.println(node.word + " " + node.counter);
+        displayStartUp(tree);
+        menu(tree, scan);
+    }
+
+    public static void menu(BST tree, Scanner scan) {
+        while(true) {
+            String in = "";
+            try {
+                in = menuInput(scan);
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+                System.exit(1);
+            }
+
+            switch(in) {
+                case "1":
+                    String find = search(scan);
+                    Node word = tree.searchWord(find, tree.root);
+                    if(word != null) {
+                        System.out.println("The word is " + word.word + " and the number of occurrences is " + word.counter);
+                    }
+                    else {
+                        System.out.println("Word does not exist!");
+                    }
+                    
+                    break;
+                
+                case "2":
+                    Traverse(scan, tree);
+                    break;
+
+                case "3":
+                    scan.close();
+                    System.out.println("Goodbye!");
+                    System.exit(1);
+                    break;
+
+                default:
+                    System.out.println("Invalid input, please try again");
+            }
         }
     }
 
-    public static ArrayList<Node> findQuantities(Node current) {
-        ArrayList<Node> word = new ArrayList<Node>();
-        word.add(current);
-        if(current.right != null) 
-            word.addAll(findQuantities(current.right));
-        if(current.left != null)
-            word.addAll(findQuantities(current.left));
-        
-        return word;
+    public static void Traverse(Scanner scan, BST tree) {
+        System.out.println("How would you like to print the tree?");
+        System.out.println("Enter one of the following:");
+        System.out.println("1. In-Order");
+        System.out.println("2. pre-Order");
+        System.out.println("3. post-Order");
+        String input = scan.nextLine();
+        switch(input) {
+            case "1":
+                tree.inOrderTraverse(tree.root);
+                break;
+            
+            case "2":
+                tree.preOrderTraverse(tree.root);
+                break;
+            
+            case "3":
+                tree.postOrderTraverse(tree.root);
+                break;
+
+            default:
+                System.out.println("Not a valid input, returning to menu...");
+        }
+
     }
 
-    public static String[] fileRead() {
+    public static String search(Scanner scan) {
+        System.out.println("which word would you like to find?");
+        String input = scan.nextLine();
+        return input;    
+    }
+
+    public static String menuInput(Scanner scan) throws IOException {
+        System.out.println();
+        System.out.println("Please select one of the following");
+        System.out.println("1. Request information about a word");
+        System.out.println("2. Display the entire tree");
+        System.out.println("3. QUIT");
+        String input = scan.nextLine();
+        return input;
+    }
+
+    public static void displayStartUp(BST tree) {
+        int total = tree.findTotals(tree.root);
+        int maxHeight = tree.findHeight(tree.root);
+        int unique = tree.findUnique(tree.root);
+        ArrayList<Node> list = tree.mostFrequent(tree.root);
+        System.out.println("The total number of words in the file is: " + total);
+        System.out.println("The number of unique words in the file is: " + unique);
+        System.out.println("The max height of the tree is: " + maxHeight);
+        System.out.println("The word(s) that occur the mose is/are: ");
+        for(Node node : list) {
+            System.out.println("\"" + node.word + "\"" + " with " + node.counter + " occurrences");
+        }
+    }
+
+    public static ArrayList<String> fileRead(Scanner scan) {
         String[] words = null;
+        ArrayList<String> filtered = new ArrayList<String>();
+        System.out.println("Please enter file name");
+        String filename = scan.nextLine();
         try {
-            File in = new File("file.txt");
+            File in = new File(filename);
             Scanner read = new Scanner(in);
             while(read.hasNextLine()) {
                 String s = read.nextLine();
                 words = s.split("\\s+");
-            }
-            for(int i=0; i < words.length; i++) {
-                words[i] = words[i].replaceAll("[^\\w]","");
-                words[i] = words[i].toLowerCase();
+                for(int i=0; i < words.length; i++) {
+                    words[i] = words[i].replaceAll("[^\\w]","");
+                    filtered.add(words[i].toLowerCase());
+                }
             }
             read.close();
-            return words;
+            return filtered;
         } catch(FileNotFoundException f) {
             System.out.println("File not found!");
             System.exit(1);
-            return words;
+            return filtered;
         }
     }
 
-    public static BST populateTree(String[] words) {
+    public static BST populateTree(ArrayList<String> words) {
         BST newTree = new BST();
-        for(int i = 0; i < words.length; i++) {
-            newTree.addNode(words[i]);
+        for(int i = 0; i < words.size(); i++) {
+            newTree.addNode(words.get(i));
         }
         return newTree;
     }
 
-    public static int findTotals(Node current) {
-        int count = 1;
-        if(current.left != null) {
-            count += findTotals(current.left);
-        }
-        if(current.right != null) {
-            count += findTotals(current.right);
-        }
-        return count;
-    }
+    
 
-    public static int findHeight(Node current) {
-        if(current == null){
-            return 0;
-        }
-        else {
-            int depthLeft = findHeight(current.left);
-            int depthRight = findHeight(current.right);
 
-            if(depthLeft > depthRight)
-                return (depthLeft+1);
-            else
-                return (depthRight+1);
-        }
-    }
 
-    public static int findUnique(Node current) {
-        int count = 0;
-        if(current.left != null) {
-            count += findUnique(current.left);
-        }
-        if(current.right != null) {
-            count += findUnique(current.right);
-        }
-        if(current.counter == 1) {
-            count++;
-            return count;
-        }
-        else return count;
-    }
+
 }

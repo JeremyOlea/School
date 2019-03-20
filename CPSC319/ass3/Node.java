@@ -9,7 +9,11 @@ public class Node {
         counter = 1;
     }
 
+    public Node() {
+
+    }
+
     public String toString() {
-        return "The word is " + word;
+        return word;
     }
 }
