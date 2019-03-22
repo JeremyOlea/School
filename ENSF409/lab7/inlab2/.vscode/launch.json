@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - DateClient",
+            "request": "launch",
+            "mainClass": "DateClient"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - DateServer",
+            "request": "launch",
+            "mainClass": "inlab2.DateServer"
+        }
+    ]
+}
