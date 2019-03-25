@@ -1,4 +1,8 @@
-import java.util.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.*;
 
 /**
  * Controls Player operations
@@ -25,6 +29,10 @@ public class Player implements Constants {
      */
     private char mark;
 
+    private Socket aSocket;
+    private BufferedReader socketIn;
+    private PrintWriter socketOut;
+
     /**
      * Constructor for the player
      */
@@ -34,12 +42,18 @@ public class Player implements Constants {
 
     /**
      * Constructor for player that initializes the name and mark of the player
-     * @param name the name of the player
+     * @param s the socket used to communicate to client
      * @param letter the mark the player will use
      */
-    Player(String name, char letter) {
-        this.name = name;
+    Player(Socket s, char letter) {
+        aSocket = s;
         mark = letter;
+        try {
+            socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
+            socketOut = new PrintWriter(aSocket.getOutputStream());
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -51,6 +65,14 @@ public class Player implements Constants {
     }
 
     /**
+     * getter for the name of the player
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Assigns the opponent of the player
      * @param  player the opponent of the player
      */
@@ -59,40 +81,103 @@ public class Player implements Constants {
     }
 
     /**
+     * Sends string to Client using the PrintWriter
+     * @param send the input to be sent to Client
+     */
+    public void sendString(String send) {
+        socketOut.println(send);
+        socketOut.flush();
+    }
+
+    /**
+     * Asks user to enter their name
+     */
+    public void getPlayerName() {
+        try {
+            sendString("Please enter name of '" + mark + "' player: \0");
+            name = socketIn.readLine();
+            while(name == null) {
+                sendString("Please try again: \0");
+                name = socketIn.readLine();
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * displays the board to both players
+     * @param board a string containing the board
+     */
+    public void displayBoard(String board) {
+        sendString(board);
+        opponent.sendString(board);
+    }
+
+    /**
+     * Prints the result of the game
+     * @param type variable that determines which message to print
+     */
+    public void printGameResult(int type) {
+        String b = "";
+        if(type == 0) {
+            b = board.display();
+            displayBoard(b);
+            sendString("THE GAME IS OVER: " + name + " is the winner! \0");
+            opponent.sendString("THE GAME IS OVER: " + opponent.getName() + " is the winner! \0");
+            opponent.sendString("QUIT");
+            sendString("QUIT");
+        } else if(type == 1) {
+            sendString("THE GAME IS OVER: Game ends in a draw! \0");
+            opponent.sendString("THE GAME IS OVER: Game ends in a draw! \0");
+            opponent.sendString("QUIT");
+            sendString("QUIT");
+        }
+    }
+
+    /**
      * Allows player to make a move and controls the opponent player's turn
      */
     public void play() {
+        String b = board.display();
+        displayBoard(b);
         if(!board.xWins() && !board.oWins() && !board.isFull()) {
             makeMove();
-            board.display();
-            if(board.xWins() || board.oWins())
-                System.out.printf("THE GAME IS OVER: %s is the winner!\n", name);
+            if(board.xWins() && mark == LETTER_X || board.oWins() && mark == LETTER_O) {
+                printGameResult(0);
+            }
             else
                 opponent.play();
         }
-        else
-            System.out.printf("Game ends in a draw!");
+        else {
+            printGameResult(1);
+        }
+            
     }
 
     /**
      * Asks Player to input a position on the board to place their mark
      */
     public void makeMove() {
-        int row, col;
+        int row = -1;
+        int col = -1;
         int isValid = 0;
-        Scanner keyboard = new Scanner(System.in);
         do {
-            System.out.printf("%s, what row should you next X be placed in?\n", name);
-            row = keyboard.nextInt();
-            System.out.printf("%s, what column should you next X be placed in?\n", name);
-            col = keyboard.nextInt();
+            try {
+                sendString(name + ", what row should you next X be placed in? \0");
+                row = Integer.parseInt(socketIn.readLine());
+                sendString(name + ", what column should you next X be placed in? \0");
+                col = Integer.parseInt(socketIn.readLine());
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
             if(row >= 0 && row <= 2 && col >= 0 && col <= 2)
                 isValid = 1;
 
             if(isValid == 0)
-                System.out.printf("Invalid row and column. Please try again\n");
+                sendString("INVALID: row and/or column does not exist. Please try again \0\n");
             else if (board.getMark(row,col) == LETTER_X || board.getMark(row,col) == LETTER_O) {
-                System.out.printf("Row %d, Column %d already taken. Please try again\n", row, col);
+                sendString("INVALID: Row" + row + ", Column " + col + " already taken. Please try again \0\n");
                 isValid = 0;
             }
         }while(isValid ==  0);

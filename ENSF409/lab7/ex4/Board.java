@@ -1,10 +1,9 @@
 
-
 /**
  * 3 by 3 Tic-Tac-Toe board
  * @author M. Moshirpour, Michael Jeremy Olea
  * @version 1.0
- * @since January 31st 2019
+ * @since March 24th, 2019
  */
 public class Board implements Constants {
 	/**
@@ -28,7 +27,7 @@ public class Board implements Constants {
 				theBoard[i][j] = SPACE_CHAR;
 		}
 	}
-
+	
 	/**
 	 * Returns the Mark of a certain row and column
 	 * @param row the row of the desired position
@@ -72,18 +71,21 @@ public class Board implements Constants {
 	/**
 	 * Displays current state of the board onto command line
 	 */
-	public void display() {
-		displayColumnHeaders();
+	public String display() {
+		String b = "BOARD\n";
+		b += displayColumnHeaders();
 		addHyphens();
 		for (int row = 0; row < 3; row++) {
 			addSpaces();
-			System.out.print("    row " + row + ' ');
+			b += "    row " + row + ' ';
 			for (int col = 0; col < 3; col++)
-				System.out.print("|  " + getMark(row, col) + "  ");
-			System.out.println("|");
-			addSpaces();
-			addHyphens();
+				b += "|  " + getMark(row, col) + "  ";
+			b += "|\n";
+			b += addSpaces();
+			b += addHyphens();
 		}
+		b += " \0";
+		return b;
 	}
 
 	/**
@@ -158,30 +160,33 @@ public class Board implements Constants {
 	/**
 	 * Displays the numbers of each column
 	 */
-	void displayColumnHeaders() {
-		System.out.print("          ");
+	String displayColumnHeaders() {
+		String b = "          ";
 		for (int j = 0; j < 3; j++)
-			System.out.print("|col " + j);
-		System.out.println();
+			b += "|col " + j;
+		b += " \n";
+		return b;
 	}
 
 	/**
 	 * Prints out the hyphens that make up the board
 	 */
-	void addHyphens() {
-		System.out.print("          ");
+	String addHyphens() {
+		String b = "          ";
 		for (int j = 0; j < 3; j++)
-			System.out.print("+-----");
-		System.out.println("+");
+			b += "+-----";
+		b += "+\n";
+		return b;
 	}
 
 	/**
 	 * Prints out the spaces used for the board
 	 */
-	void addSpaces() {
-		System.out.print("          ");
+	String addSpaces() {
+		String b = "          ";
 		for (int j = 0; j < 3; j++)
-			System.out.print("|     ");
-		System.out.println("|");
+			b += "|     ";
+		b += "|\n";
+		return b;
 	}
 }

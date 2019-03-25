@@ -1,15 +1,13 @@
-
-import java.io.*;
-
+import java.io.IOException;
 //STUDENTS SHOULD ADD CLASS COMMENTS, METHOD COMMENTS, FIELD COMMENTS 
 
 /**
  * Starts the Tic-Tac-Toe game
  * @author M. Moshirpour, Michael Jeremy Olea
  * @version 1.0
- * @since January 31st, 2019
+ * @since March 24th, 2019
  */
-public class Game implements Constants {
+public class Game implements Constants, Runnable {
 
 	/**
 	 * Object of class Board that holds the current game
@@ -23,8 +21,8 @@ public class Game implements Constants {
 	/**
 	 * Constructor for the game that constructs the Board
 	 */
-    public Game( ) {
-        theBoard  = new Board();
+    public Game() {
+		theBoard  = new Board();
 	}
 	
 	/**
@@ -34,47 +32,12 @@ public class Game implements Constants {
 	 */
     public void appointReferee(Referee r) throws IOException {
         theRef = r;
-    	theRef.runTheGame();
-    }
-	
-	/**
-	 * Collects information of players to run the game
-	 * @param args Command line arguments
-	 * @throws IOException Exception in case of bad input/output
-	 */
-	public static void main(String[] args) throws IOException {
-		Referee theRef;
-		Player xPlayer, oPlayer;
-		BufferedReader stdin;
-		Game theGame = new Game();
-		stdin = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print("\nPlease enter the name of the \'X\' player: ");
-		String name= stdin.readLine();
-		while (name == null) {
-			System.out.print("Please try again: ");
-			name = stdin.readLine();
-		}
-
-		xPlayer = new Player(name, LETTER_X);
-		xPlayer.setBoard(theGame.theBoard);
-		
-		System.out.print("\nPlease enter the name of the \'O\' player: ");
-		name = stdin.readLine();
-		while (name == null) {
-			System.out.print("Please try again: ");
-			name = stdin.readLine();
-		}
-		
-		oPlayer = new Player(name, LETTER_O);
-		oPlayer.setBoard(theGame.theBoard);
-		
-		theRef = new Referee();
-		theRef.setBoard(theGame.theBoard);
-		theRef.setoPlayer(oPlayer);
-		theRef.setxPlayer(xPlayer);
-        
-        theGame.appointReferee(theRef);
+		theRef.setBoard(theBoard);
+		theRef.getxPlayer().setBoard(theBoard);
+		theRef.getoPlayer().setBoard(theBoard);
 	}
 	
-
+	public void run() {
+		theRef.runTheGame();
+	}
 }

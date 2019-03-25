@@ -28,12 +28,13 @@ public class Referee {
     }
 
     /**
-     * Starts the game by letting x player go first
+     * Asks players to enter their names and starts the game by letting x player go first
      */
     public void runTheGame() {
         xPlayer.setOpponent(oPlayer);
         oPlayer.setOpponent(xPlayer);
-        board.display();
+        xPlayer.getPlayerName();
+        oPlayer.getPlayerName();
         xPlayer.play();
     }
 
@@ -59,5 +60,21 @@ public class Referee {
      */
     public void setxPlayer(Player xPlayer) {
         this.xPlayer = xPlayer;
+    }
+
+    /**
+     * getter function for xPlayer
+     * @return xPlayer
+     */
+    public Player getxPlayer() {
+        return xPlayer;
+    }
+
+    /**
+     * getter function for oPlayer
+     * @return oPlayer
+     */
+    public Player getoPlayer() {
+        return oPlayer;
     }
 }
