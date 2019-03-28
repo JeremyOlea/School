@@ -124,7 +124,7 @@ public class Player implements Constants {
             b = board.display();
             displayBoard(b);
             sendString("THE GAME IS OVER: " + name + " is the winner! \0");
-            opponent.sendString("THE GAME IS OVER: " + name + " is the winner! \0");
+            opponent.sendString("THE GAME IS OVER: " + opponent.getName() + " is the winner! \0");
             opponent.sendString("QUIT");
             sendString("QUIT");
         } else if(type == 1) {

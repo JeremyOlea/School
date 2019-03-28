@@ -45,38 +45,28 @@ public class Server {
      * infinite loop to wait for Client input
      */
     public void communicate() {
-        String word;
-        while (true) {
-          try {
-            word = socketIn.readLine();
-            if (word == null) {
-              socketOut.println("Goodbye!");
-              break;
-            }
-            if (checkPalindrome(word)) {
-              socketOut.println(word + " is a palindrome!");
-            } else {
-              socketOut.println(word + " is NOT a palindrome.");
-            }
-          } catch(IOException e) {
-            System.err.println(e.getMessage());
-          }
-        }
-    }
-
-    /**
-     * Calculates if a given string is a Palindrome
-     * @param word The string to be check if it is a Paliondrome
-     * @return true if the string is a palindrome, false otherwise
-     */
-    public boolean checkPalindrome(String word) {
-        char[] wordChars = word.toCharArray();
-        for(int i = 0; i < wordChars.length; i++) {
-            if(wordChars[i] != wordChars[wordChars.length - i - 1]) {
-                return false;
+        while(true) {
+            try {
+                String word = socketIn.readLine();
+                char[] wordChars = word.toCharArray();
+                boolean isPalindrome = true;
+                for(int i = 0; i < wordChars.length; i++) {
+                    if(wordChars[i] != wordChars[wordChars.length - i - 1]) {
+                        isPalindrome = false;
+                    }
+                }
+                if(isPalindrome == true) {
+                    socketOut.println(word + " is a palindrome\n");
+                }
+                else {
+                    socketOut.println(word + " is not a palindrome\n");
+                }
+    
+            } catch(IOException e) {
+                System.out.println("error in communicate");
             }
         }
-        return true;
+        
     }
 
     /**

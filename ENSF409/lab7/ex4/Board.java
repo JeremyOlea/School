@@ -74,7 +74,7 @@ public class Board implements Constants {
 	public String display() {
 		String b = "BOARD\n";
 		b += displayColumnHeaders();
-		b += addHyphens();
+		addHyphens();
 		for (int row = 0; row < 3; row++) {
 			addSpaces();
 			b += "    row " + row + ' ';
