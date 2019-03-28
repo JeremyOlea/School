@@ -1,7 +1,7 @@
 /** 
  * Started by M. Moussavi
  * March 2015
- * Completed by: Michael Jeremy Olea
+ * Completed by: STUDENT(S) NAME
  */
 
 import java.io.EOFException;
@@ -46,13 +46,17 @@ public class ReadRecord {
                 } catch(EOFException e) {
                     break;
                 }
-            }  
+
+            }   // END OF WHILE
+            // ADD NECESSARY catch CLAUSES HERE
         } catch(IOException e) {
             System.err.println("Error..." + e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    } 
+                
+
+    }           // END OF METHOD 
     
     
     public static void main(String [] args)

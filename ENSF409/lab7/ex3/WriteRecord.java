@@ -1,7 +1,7 @@
 /**
  * Started by M. Moussavi
  * March 2015
- * Completed by: Michael Jeremy Olea
+ * Completed by: STUDENT(S) NAME
  */
 
 import java.io.FileInputStream;

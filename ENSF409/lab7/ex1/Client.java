@@ -6,7 +6,7 @@ import java.net.Socket;
 
 /**
  * Takes inputs from user to send to Server
- * @author M. Moshirpour
+ * @author M. Moshirpour, Michael Jeremy Olea
  * @version 1.0
  * @since March 24th, 2019
  */
