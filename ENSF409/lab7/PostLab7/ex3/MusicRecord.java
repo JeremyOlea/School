@@ -1,0 +1,105 @@
+import java.io.Serializable;
+/**
+ * A simple class that represents a music record
+ * @author Michael Jeremy Olea
+ * @version 1.0
+ * @since March 24th, 2019
+ */
+class MusicRecord implements Serializable
+	{
+		private static final long serialVersionUID = 8743454622122541051L;
+		private int year_recorded;
+		private String songName;
+		private String singerName;
+		private double purchase_price;
+		
+        /**
+         * A default constructor that builds a record with blank data
+         */
+		public MusicRecord() {
+			this( 0, "", "", 0.0 ); 
+		} 
+	  
+        /**
+         * A constructor that initializes the music records with supplied 
+         * data.
+		 * @param year year of record
+		 * @param song song name
+		 * @param singer singer of song
+		 * @param value cost of record
+         */
+		public MusicRecord( int year, String song, String singer, double value ) {
+			setYear( year );
+			setSongName( song );
+			setSingerName( singer );
+			setPrice( value );
+		} 
+		
+        
+        /**
+         * Sets the data field year_recorded to supplied argument year
+         * data.
+		 * @param year year of song
+         */
+		public void setYear( int year ) {
+			year_recorded = year;
+		}
+        
+        
+        /**
+         * Returns the recording year
+		 * @return year of song
+         */
+		public int getYear() {
+			return year_recorded; 
+		}
+        
+        /**
+         * Sets the data field songName to supplied argument song
+		 * @param song name of song
+         */
+		public void setSongName( String song ) {
+			songName = song;
+		}
+        
+        
+        /**
+         * Returns the songName name
+		 * @return name of song
+         */
+		public String getSongName()  {
+			return songName; 
+		} 
+		
+        /**
+         * Sets the data field sinterName to supplied argument singer
+		 * @param singer name of singer
+         */
+		public void setSingerName( String singer ) {
+			singerName = singer;
+		}
+        
+        /**
+         * Returns the singer's name
+		 * @return name of singer
+         */
+		public String getSingerName() {
+			return singerName; 
+		}
+        
+        /**
+         * Sets the data field purchase_price to supplied argument price
+		 * @param value cost of record
+         */
+		public void setPrice( double value ) {
+			purchase_price = value;
+		}
+        
+        /**
+         * Returns the price
+		 * @return cost of record
+         */
+		public double getPurchasePrice(){
+			return purchase_price; 
+		} 
+	} 

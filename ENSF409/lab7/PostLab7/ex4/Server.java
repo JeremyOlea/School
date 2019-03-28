@@ -45,6 +45,7 @@ public class Server {
                 theRef.setxPlayer(xPlayer);
                 theRef.setoPlayer(oPlayer);
 
+                //BufferedReader stdIn;
                 Game theGame = new Game();
                 theGame.appointReferee(theRef);
 

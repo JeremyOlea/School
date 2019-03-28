@@ -9,14 +9,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Reads the .ser file and prints it
+ * @author Michael Jeremy Olea
+ * @version 1.0
+ * @since March 24th, 2019
+ */
 public class ReadRecord {
     
+    /**
+     * Input stream to read from file
+     */
     private ObjectInputStream input;
     
     /**
      *  opens an ObjectInputStream using a FileInputStream
+     * @param name the name of the file
      */
-    
     private void readObjectsFromFile(String name)
     {
         MusicRecord record ;
@@ -54,7 +63,10 @@ public class ReadRecord {
         }
     } 
     
-    
+    /**
+     * The main method
+     * @param args Command line arguments
+     */
     public static void main(String [] args)
     {
         ReadRecord d = new ReadRecord();
