@@ -12,11 +12,29 @@ import java.io.ObjectOutputStream;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Writes object into .ser file
+ * @author Michael Jeremy Olea
+ * @version 1.0
+ * @since March 24th, 2019
+ */
 public class WriteRecord {
 
+	/**
+	 * Output stream
+	 */
 	ObjectOutputStream objectOut = null;
+	/**
+	 * Music Record object
+	 */
 	MusicRecord record = null;
+	/**
+	 * Scanner for reading
+	 */
 	Scanner stdin = null;
+	/**
+	 * Scanner for reading text file
+	 */
 	Scanner textFileIn = null;
 
 	/**
@@ -64,7 +82,6 @@ public class WriteRecord {
 		} catch(IOException e) {
 			System.err.println("Error opening file");
 		}
-    // TO BE COMPLETED BY THE STUDENTS
         
 	}
 	
@@ -111,10 +128,12 @@ public class WriteRecord {
 			System.err.println("Error closing file");
 			System.exit(1);
 		}
-
-		// YOUR CODE GOES HERE
 	}
 
+	/**
+  * The main method
+  * @param args Command line arguments
+  */
 	public static void main(String[] args) throws IOException {
         
 		WriteRecord d = new WriteRecord();
