@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MyFrame1",
+            "request": "launch",
+            "mainClass": "MyFrame1",
+            "projectName": "myFrame1_ecf91e6f"
+        }
+    ]
+}
