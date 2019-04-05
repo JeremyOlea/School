@@ -1,8 +1,24 @@
 
 
-class Circle extends Shape implements Cloneable
+class Circle extends Shape implements Cloneable, Resizealbe
 {
 	private Double radius;
+
+	@Override
+	public void shrink(double val) {
+		if(val > LIMIT) {
+			radius /= val;
+		}
+		else throw new SizeFactorException(LIMIT);
+	}
+
+	@Override
+	public void enlarge(double val) {
+		if(val > LIMIT) {
+			radius *= val;
+		}
+		else throw new SizeFactorException(LIMIT);
+	}
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {

@@ -1,7 +1,25 @@
 
 
-class Prism extends Rectangle implements Cloneable{
+class Prism extends Rectangle implements Cloneable, Resizeable{
 	private Double height;
+
+	@Override
+	public void shrink(double val) {
+		if(val > LIMIT) {
+			super.shrink(val);
+			height /= val;
+		}
+		else throw new SizeFactorException(LIMIT);
+	}
+
+	@Override
+	public void enlarge(double val) {
+		if(val > LIMIT) {
+			super.enlarge(val);
+			height *= val;	
+		}
+		else throw new SizeFactorException(LIMIT);
+	}
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {

@@ -1,8 +1,27 @@
 
 
-class Rectangle extends Shape implements Cloneable
+class Rectangle extends Shape implements Cloneable, Resizeable
 {
 	protected Double width, length;
+
+	@Override
+	public void shrink(double val) {
+		if(val > LIMIT) {
+			width /= val;
+			lenght /= val;	
+		}
+		else throw new SizeFactorException(LIMIT);
+		
+	}
+
+	@Override
+	public void enlarge(double val) {
+		if(val > LIMIT) {
+			width *= val;
+			lenght *= val;	
+		}
+		else throw new SizeFactorException(LIMIT);
+	}
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {

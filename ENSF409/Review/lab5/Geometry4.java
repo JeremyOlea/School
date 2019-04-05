@@ -27,9 +27,9 @@ public class Geometry4{
 // EXERCISE_1_BEGINS
 
        System.out.println("\n\nMaking r1 copy of r2, c1 copy of c2, p1 copy of p2:");
-       r1 = r2;
-       c1 = c2;
-       p1 = p2;
+       r1 = r2.clone();
+       c1 = c2.clone();
+       p1 = p2.clone();
        
        r2.set_length(1000.0);
        r2.getOrigin().setx(88.0);
@@ -56,7 +56,7 @@ public class Geometry4{
         
 // THE FOLLOWING CODE SEGMENT MUST BE UNCOMMENTED ONLY FOR EXERCISE 2 in Lab 5
 // EXERCISE_2_BEGINS
-/*
+
         try{
 
         	  r1.enlarge(2.0);
@@ -86,7 +86,7 @@ public class Geometry4{
       
         System.out.println("\nHere are values for p1 after calling shrink (0.5) -- UNCHANGED:");
         System.out.println(p1); 
- */
+
 // EXERCISE_2_ENDS
                
 	}
