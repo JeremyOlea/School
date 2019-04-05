@@ -1,81 +1,47 @@
-import java.io.*;
 import java.util.*;
+import java.io.File;
+import java.io.IOException;
 
-public class asgmt4 {
-    private static int row;
-    private static int col;
-    private static int size;
+public class Asgmt4 {
+	public static void main(String[] args) throws IOException {
+		String[] fnameExt = args[0].split("\\.");
+		Scanner kb = new Scanner(new File(args[0]));
+		int x = kb.nextInt(), y = kb.nextInt(), n = kb.nextInt();
+		ArrayList<PixelVertex> verts = new ArrayList<>(n);
+		int[][] adj = new int[n][n];
+		for (int i = 0; i < n; i++)
+			adj[i][i] = -1;				// represent absence of self-edges
 
-    public static void main(String[] args) {
-        ArrayList<Neighbourhood> neighbourhoodList = readFile();
-        int[][] matrix = createMatrix(neighbourhoodList);
-    }
+		for (int i = 0; i < n; i++) {
+			kb.nextInt();
+			PixelVertex vert = new PixelVertex(x*y);
+            for(int j = 0; j < x*y; j++) {
+				int data = kb.nextInt();
+				if(data == 1)
+					vert.pixel[j] = true;
+				else
+					vert.pixel[j] = false;
+			}
+			verts.add(vert);
+            
+			// TODO: Fill in vert.pixel (one-dimensional rep. of matrix)
 
-    public static int calculateWeight(Neighbourhood one, Neighbourhood two) {
-        int[][] gridOne = one.getGrid();
-        int[][] gridTwo = two.getGrid();
-        int sum = 0;
-        for(int i = 0; i < row; i++) {
-            for(int j = 0; j < col; j++) {
-                sum += (gridOne[i][j] - gridTwo[i][j]);
-            }
-        }
-        return sum;
-    }
+			/* TODO: Use vert.difference method to calculate difference
+			 *		 between vert and all vertices in 'verts' ArrayList
+			 */
 
-    public static int[][] createMatrix(ArrayList<Neighbourhood> n) {
-        int[][] tempMatrix = new int[size][size];
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                int weight = calculateWeight(n.get(i), n.get(j));
-                tempMatrix[i][j] = weight;
-            }
-        }
-        return tempMatrix;
-    }
+			// TODO: Add vert to 'verts' ArrayList
+		}
 
-    public static ArrayList<Neighbourhood> readFile() {
-        ArrayList<Neighbourhood> neighbourhoodList = new ArrayList<Neighbourhood>();
-        row = 0;
-        col = 0;
-        size = 0;
-        String input = "";
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter file name");
-        String filename = scan.nextLine();
-        try {
-            File in = new File(filename);
-            Scanner read = new Scanner(in);
-            if(read.hasNextLine()) {
-                input = read.nextLine();
-                String[] dimensions = input.split("\\s+");
-                row = Integer.parseInt(dimensions[0]);
-                col = Integer.parseInt(dimensions[1]);
-            }
-            if(read.hasNextLine()) {
-                input = read.nextLine();
-                size = Integer.parseInt(input);
-            }
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				adj[i][j] = verts.get(i).difference(verts.get(j));
+			}
+		}
 
-            int[][] block = new int[row][col];
-            for(int k = 0; k < size; k++) {
-                for(int i = 0; i < row; i++) {
-                    for(int j = 0; j < col; j++) {
-                        if(read.hasNextLine()) {
-                            read.nextInt(); //not to read the header int
-                            int integerInput = read.nextInt();
-                            block[i][j] = integerInput;
-                        }
-                    }
-                }
-                Neighbourhood neighbourhood = new Neighbourhood(row, col, block);
-                neighbourhoodList.add(neighbourhood);
-            }
-            read.close();
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found!");
-        }
-        scan.close();
-        return neighbourhoodList;
-    }
+		Graph g = new Graph(adj);
+		g.printGraph(fnameExt[0] + "-GRAPH_out." + fnameExt[1]);
+		g.printMST(fnameExt[0] + "-MST_out." + fnameExt[1]);
+		kb.close();
+	}
 }
