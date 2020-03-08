@@ -2,15 +2,13 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Asgmt4 {
+public class asgmt4 {
 	public static void main(String[] args) throws IOException {
 		String[] fnameExt = args[0].split("\\.");
 		Scanner kb = new Scanner(new File(args[0]));
 		int x = kb.nextInt(), y = kb.nextInt(), n = kb.nextInt();
 		ArrayList<PixelVertex> verts = new ArrayList<>(n);
 		int[][] adj = new int[n][n];
-		for (int i = 0; i < n; i++)
-			adj[i][i] = -1;				// represent absence of self-edges
 
 		for (int i = 0; i < n; i++) {
 			kb.nextInt();
@@ -23,14 +21,6 @@ public class Asgmt4 {
 					vert.pixel[j] = false;
 			}
 			verts.add(vert);
-            
-			// TODO: Fill in vert.pixel (one-dimensional rep. of matrix)
-
-			/* TODO: Use vert.difference method to calculate difference
-			 *		 between vert and all vertices in 'verts' ArrayList
-			 */
-
-			// TODO: Add vert to 'verts' ArrayList
 		}
 
 		for(int i = 0; i < n; i++) {

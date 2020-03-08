@@ -20,12 +20,10 @@ class Graph {
 	}
 
 	private void DFS(int u, boolean[] vis, PrintWriter pr) {
-        // TODO: Implement DFS, printing edges to pr as it functions
         vis[u] = true;
         for(int i = 0; i < n; i++) {
-            if(adj[u][i] != 0)
-                pr.println(u + " - " + i + "\t\t" + adj[u][i]);
             if(!vis[i] && adj[u][i] != 0) {
+                pr.println(u + " - " + i + "\t\t" + adj[u][i]);
                 this.DFS(i, vis, pr);
             }
         }
@@ -39,20 +37,7 @@ class Graph {
 	}
 
 	private void prim(int s, PrintWriter pr) {
-		/* TODO: Implement Prim's algorithm
-        
-		   - initialize cost, par, and vis arrays
-		   - instantiate PriorityQueue pq, pass all vertices into pq wrapped in CostVertex
-		   		(see DijkstraExample from website to see how this is done)
-		   - iteratively poll PriorityQueue for vertex u with minimum cost
-		   		- mark u as visited
-		   		- iterate from v = 0 to n-1
-		   			- if cost of edge from u to v is less than cost[v], update cost[v], par[v], and add appropriate CostVertex to pq
-
-		   	- print result stored in cost and par
-
-		 */
-        int[] parent = new int[n];
+        int[] minSpanningTree = new int[n];
         int[] key = new int[n];
         boolean[] mySet = new boolean[n];
 
@@ -61,7 +46,7 @@ class Graph {
             mySet[i] = false;
         }
 
-        parent[0] = -1;
+        minSpanningTree[0] = -1;
         key[0] = 0;
         for(int i = 0; i < n-1; i++) {
             int min = minKey(key, mySet);
@@ -69,12 +54,12 @@ class Graph {
 
             for(int j = 0; j < n; j++) {
                 if(adj[min][j] != 0 && mySet[j] == false && adj[min][j] < key[j]) {
-                    parent[j] = min;
+                    minSpanningTree[j] = min;
                     key[j] = adj[min][j];
                 }
             }
         }
-        this.printMST(parent, pr);
+        this.printMST(minSpanningTree, pr);
     }
     
     private int minKey(int[] key, boolean[] mySet) {
@@ -89,10 +74,9 @@ class Graph {
         return minIndex;
     }
 
-    private void printMST(int[] parent, PrintWriter pr) 
+    private void printMST(int[] minSpanningTree, PrintWriter pr) 
     { 
         for (int i = 1; i < n; i++) 
-            pr.println(parent[i]+" - "+ i+"\t\t"+ 
-                            adj[i][parent[i]]); 
+            pr.println(minSpanningTree[i]+" - "+ i+"\t\t"+ adj[i][minSpanningTree[i]]); 
     } 
 }
